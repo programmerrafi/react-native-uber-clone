@@ -6,6 +6,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import { useDispatch } from "react-redux";
 import { setDestination, setOrigin } from "../Redux/slice/navSlice";
+import NavFavourites from "../components/NavFavourites";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -19,41 +20,39 @@ const HomeScreen = () => {
         />
 
         <GooglePlacesAutocomplete
-          placeholder="Where From?"
+          placeholder="Where from?"
+          nearbyPlacesAPI="GooglePlacesSearch"
+          debounce={400}
+          onPress={(data, details = null) => {
+            dispatch(
+              setOrigin({
+                loaction: details.geometry.location,
+                description: data.description,
+              })
+            );
+            dispatch(setDestination(null));
+          }}
+          minLength={2}
+          fetchDetails={true}
+          returnKeyType={"search"}
+          onFail={(error) => console.error(error)}
+          query={{
+            key: GOOGLE_MAPS_APIKEY,
+            language: "en",
+          }}
           styles={{
             container: {
               flex: 0,
             },
             textInput: {
-              fontSize: 18,
+              fontSize: 15,
             },
           }}
-          renderDescription={(row) => row.terms[0].value}
           enablePoweredByContainer={false}
-          nearbyPlacesAPI="GooglePlacesSearch"
-          returnKeyType={"search"}
-          debounce={400}
-          minLength={2}
-          keyboardShouldPersistTaps="always"
-          query={{
-            key: GOOGLE_MAPS_APIKEY,
-            language: "en",
-          }}
-          onPress={(data, details = null) => {
-            console.log("data", data.description);
-            console.log("details", details.geometry);
-            // dispatch(
-            //   setOrigin({
-            //     location: details.geometry.location,
-            //     description: data.description,
-            //   })
-            // );
-            // dispatch(setDestination(null));
-          }}
-          onFail={(error) => console.error(error)}
         />
 
-        {/* <NavOptions /> */}
+        <NavOptions />
+        <NavFavourites />
       </View>
     </SafeAreaWrapper>
   );
