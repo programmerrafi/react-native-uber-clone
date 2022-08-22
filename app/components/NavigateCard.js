@@ -5,7 +5,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { setDestination } from "../Redux/slice/navSlice";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { GOOGLE_MAP_APIKEY } from "@env";
+import { GOOGLE_MAPS_APIKEY } from "@env";
 import NavFavourites from "./NavFavourites";
 import { Icon } from "react-native-elements";
 
@@ -39,7 +39,7 @@ const NavigateCard = () => {
             returnKeyType={"search"}
             onFail={(error) => console.error(error)}
             query={{
-              key: "AIzaSyCMN-GLse6vtMpdlBNQoy3HUmWxQD_88NE",
+              key: GOOGLE_MAPS_APIKEY,
               language: "en",
             }}
             styles={toInputBoxStyles}

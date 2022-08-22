@@ -12,7 +12,11 @@ import {
 import { Icon } from "react-native-elements";
 import Screen from "./Screen";
 import { useSelector } from "react-redux";
-import { selectOrigin, selectDestination } from "../Redux/slice/navSlice";
+import {
+  selectOrigin,
+  selectDestination,
+  selectTravelTimeInformation,
+} from "../Redux/slice/navSlice";
 
 const data = [
   {
@@ -40,7 +44,7 @@ const SEARCH_CHARGE_RATE = 1.5;
 const RideOptionsCard = () => {
   const navigation = useNavigation();
   const [selected, setSelected] = useState(null);
-  // const travelTimeInformation = useSelector(selectTravelTimeInformation);
+  const travelTimeInformation = useSelector(selectTravelTimeInformation);
   const origin = useSelector(selectOrigin);
   const destination = useSelector(selectDestination);
 
